@@ -1,0 +1,112 @@
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ * @flow strict-local
+ */
+
+import React from 'react';
+import { useEffect, useState } from 'react';
+import {
+    SafeAreaView,
+    StyleSheet,
+    ScrollView,
+    View,
+    Text,
+    StatusBar,
+    Button,
+    TextInput
+} from 'react-native';
+
+import {
+    Header,
+    LearnMoreLinks,
+    Colors,
+    DebugInstructions,
+    ReloadInstructions,
+} from 'react-native/Libraries/NewAppScreen';
+import { connect } from "react-redux"
+import { set_data, set_data_to_firebase } from "../../store/action"
+import database from "@react-native-firebase/database"
+import { Container, Title, Content, Footer, FooterTab, Left, Right, Body, Icon } from 'native-base';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+
+{/* <View style={styles.engine}></View> */ }
+const Home = (props) => {
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+
+    // useEffect(() => {
+    //     console.log("USERS ===> ", props.users)
+    // }, [props.users])
+
+    // let user = { name: "AXS", email: "AXS@gma.com" }
+
+    // const save_data = () => {
+    //     let user = {
+    //         email,
+    //         password,
+    //     }
+    //     props.set_data_to_firebase(user)
+    //     // database().ref('/').child('users').push(user)
+    //     setEmail("")
+    //     setPassword("")
+    // }
+
+    return (
+        <Container>
+            <Header>
+                <Left>
+                    <TouchableOpacity title="FHA">
+                        {/* <Icon name='menu' /> */}
+                    </TouchableOpacity>
+                </Left>
+                <Body>
+                    <Title>Header</Title>
+                </Body>
+                <Right />
+            </Header>
+            <Content>
+                <Text>
+                    This is Content Section
+                </Text>
+            </Content>
+            <Footer>
+                <FooterTab>
+                    <Button full title="FOoter">
+                        <Text>Footer</Text>
+                    </Button>
+                </FooterTab>
+            </Footer>
+        </Container>
+    )
+}
+// <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+//     <Text style={{ fontSize: 24 }}>Home</Text>
+//     <View style={{ borderWidth: 2, borderColor: "grey", width: "80%" }}>
+//         <TextInput value={email} onChangeText={(text) => setEmail(text)} placeholder="Email" />
+//     </View>
+//     <View style={{ borderWidth: 2, borderColor: "grey", width: "80%" }}>
+//         <TextInput secureTextEntry={true} value={password} onChangeText={(text) => setPassword(text)} placeholder="Password" />
+//     </View>
+//     <Button title="Save Data" onPress={save_data} />
+//     {/* <Button title="OK" onPress={() => props.set_data(user)} width={100} /> */}
+// </View>
+
+// const styles = StyleSheet.create({
+//     scrollView: {
+//         backgroundColor: Colors.lighter,
+//     },
+// });
+
+const mapStateToProps = (state) => ({
+    users: state.users
+})
+
+const mapDispatchToProps = (dispatch) => ({
+    set_data: (data) => dispatch(set_data(data)),
+    set_data_to_firebase: (data) => dispatch(set_data_to_firebase(data))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
