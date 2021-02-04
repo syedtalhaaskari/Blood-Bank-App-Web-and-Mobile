@@ -99,13 +99,23 @@ export default (state = INITIAL_STATE, action) => {
             var arr = []
             return database().ref("/").orderByChild("selected").equalTo(action.data).on("value", function (snapshot) {
                 return state.donors = snapshot.val()
-                snapshot.forEach(function (child) {
-                    arr.push(child.val()) // NOW THE CHILDREN PRINT IN ORDER    
-                });
-                return {
-                    donors: arr
-                }
+                // snapshot.forEach(function (child) {
+                //     arr.push(child.val()) // NOW THE CHILDREN PRINT IN ORDER    
+                // });
+                // return {
+                //     donors: arr
+                // }
                 // state.donors = arr
+            })
+
+        case "FIREBASEDELETEUSER":
+            return auth().currentUser.delete().then(function () {
+                database().ref(`/${action.data.uid}`).remove().then(() => {
+                    action.data.nav("LoginArea", { screen: "Login" })
+                })
+            }
+            ).catch(error => {
+                alert(error)
             })
 
         default:

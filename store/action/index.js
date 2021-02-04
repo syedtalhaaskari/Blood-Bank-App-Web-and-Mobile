@@ -40,6 +40,12 @@ const profile_look = (data) => {
     }
 }
 
+const delete_user = (data) => {
+    return (dispatch) => {
+        dispatch({type: "FIREBASEDELETEUSER", data: data})
+    }
+}
+
 export {
     firebase_login_check,
     firebase_register,
@@ -48,4 +54,5 @@ export {
     firebase_donors,
     profile_look,
     firebase_edit,
+    delete_user,
 }

@@ -3,7 +3,7 @@ import { Container, Text, View, List, ListItem } from 'native-base';
 import { ImageBackground, StyleSheet, ScrollView, TouchableOpacity, Modal, TouchableHighlight } from 'react-native';
 import image from "../../assets/images/background.jpg"
 import { connect } from "react-redux"
-import { firebase_logout, profile_look } from "../../store/action"
+import { firebase_logout, profile_look, delete_user } from "../../store/action"
 import database from "@react-native-firebase/database"
 import auth from "@react-native-firebase/auth"
 import moment from "moment"
@@ -38,6 +38,14 @@ const Profile = (props) => {
         })
     }, [])
 
+    const delete_account = () => {
+        let data = {
+            nav: props.navigation.navigate,
+            uid: user.uid,
+        }
+        props.delete_user(data)
+    }
+
     return (
         <Container>
             <Modal
@@ -60,7 +68,7 @@ const Profile = (props) => {
                         </TouchableHighlight>
                         <View style={styles.modalView}>
                             <Text style={styles.modalText}>Are you sure you want to delete your account?</Text>
-                            <TouchableOpacity style={{ ...styles.btn, borderColor: "#111", borderWidth: 1, }} onPress={() => alert("Delete Hogaya")}>
+                            <TouchableOpacity style={{ ...styles.btn, borderColor: "#111", borderWidth: 1, }} onPress={() => delete_account()}>
                                 <Text style={styles.btnText}>Yes</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={{ ...styles.btn, borderColor: "#111", borderWidth: 1, }} onPress={() => {
@@ -107,8 +115,9 @@ const Profile = (props) => {
                                 <Text><Text style={{ fontWeight: "bold" }}>Password: </Text>**********</Text>
                             </ListItem>
                         </List>
-                        <TouchableHighlight activeOpacity={0.8} style={styles.btn} onPress={() => props.navigation.navigate("ProfileEdit", {userData: user})}><Text style={styles.btnText}>Edit</Text></TouchableHighlight>
+                        <TouchableHighlight activeOpacity={0.8} style={styles.btn} onPress={() => props.navigation.navigate("ProfileEdit", { userData: user })}><Text style={styles.btnText}>Edit</Text></TouchableHighlight>
                         <TouchableHighlight activeOpacity={0.8} style={styles.btn} onPress={() => { props.firebase_logout(props.navigation.navigate) }}><Text style={styles.btnText}>Logout</Text></TouchableHighlight>
+                        <TouchableHighlight activeOpacity={0.8} style={styles.btn} onPress={() => { setModalVisible(true) }}><Text style={styles.btnText}>Delete Your Account</Text></TouchableHighlight>
                     </ScrollView>
                 </View>
             </ImageBackground>
@@ -178,7 +187,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     firebase_logout: (data) => dispatch(firebase_logout(data)),
-    profile_look: (data) => dispatch(profile_look(data))
+    profile_look: (data) => dispatch(profile_look(data)),
+    delete_user: (data) => dispatch(delete_user(data)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

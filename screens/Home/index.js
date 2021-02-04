@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { Container, Form, Item, Text, View, Picker, List, ListItem, Icon } from 'native-base';
-import { ImageBackground, StyleSheet, ScrollView, Modal, TouchableHighlight, TouchableOpacity } from 'react-native';
+import { ImageBackground, StyleSheet, ScrollView, Modal, TouchableHighlight, TouchableOpacity, Linking } from 'react-native';
 import image from "../../assets/images/background.jpg"
 import { connect } from "react-redux"
 import { firebase_donors } from "../../store/action"
@@ -61,8 +61,8 @@ const Home = (props) => {
                             <Text style={styles.modalText}><Icon name="add-circle-sharp" style={{ color: "orange", }} />: {moment(new Date(item.dob)).format('DD-MM-YYYY')}</Text>
                             <Text style={styles.modalText}><Icon name="water" style={{ color: "maroon", }} />: {item.selected}</Text>
                             <Text style={styles.modalText}><Icon name="home" style={{ color: "brown", }} />: {item.address}</Text>
-                            <TouchableOpacity onPress={() => alert("HEllo")}>
-                                <Text style={styles.modalText}><Icon name="call" style={{ color: "green", }} />: {item.contact}<Text style={{ fontSize: 10 }}>(Click To Call)</Text></Text>
+                            <TouchableOpacity onPress={() => Linking.openURL(`tel:${item.contact}`)}>
+                                <Text style={styles.modalText}><Icon name="call" style={{ color: "green", }} />: {item.contact} <Text style={{ fontSize: 10 }}>(Click To Call)</Text></Text>
                             </TouchableOpacity>
                         </View>
                     </View>
